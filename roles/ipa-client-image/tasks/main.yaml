@@ -1,0 +1,7 @@
+- name: Install FreeIPA client
+  dnf:
+    name: freeipa-client
+    state: installed
+
+- name: Clean dnf metadata
+  command: dnf clean all

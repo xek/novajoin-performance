@@ -1,0 +1,32 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    image: fedora:latest
+    container_name: ipa_build_container
+    image_name: ipa-test-client
+  tasks:
+
+  - name: Remove container from previous failed runs
+    command: 'buildah rm {{ container_name }}'
+    ignore_errors: true
+
+  - name: Obtain base image and create a container out of it
+    command: 'buildah from --name {{ container_name }} docker://{{ image }}'
+
+  - name: Add the newly created container to the inventory
+    add_host:
+      hostname: '{{ container_name }}'
+      ansible_connection: buildah
+      ansible_python_interpreter: /usr/bin/python3
+
+  - name: Run the role in the container
+    delegate_to: '{{ container_name }}'
+    include_role:
+      name: ipa-client-image
+
+  - name: Change default command of the container image
+    command: 'buildah config --cmd run.py {{ container_name }}'
+
+  - name: Commit the container and make it an image
+    command: 'buildah commit --rm {{ container_name }} {{ image_name }}:latest'
