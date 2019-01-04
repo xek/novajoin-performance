@@ -1,2 +1,3 @@
 ---
 - import_playbook: playbooks/build-container.yaml
+- import_playbook: playbooks/run-scenario.yaml

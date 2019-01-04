@@ -1,0 +1,24 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    client_count: 10
+    pause_seconds: 0
+    container_name_prefix: ipa_client_
+    image_name: ipa-test-client
+  tasks:
+
+  - name: Run a specified number of containers
+    shell: |
+      podman run --net=host --name {{ item }} {{ image_name }}
+      sleep {{ pause_seconds }}
+    with_sequence: count={{ client_count }} format={{ container_name_prefix }}%03i
+
+  - name: Wait until finished
+    command: 'podman wait {{ item }}'
+    with_sequence: count={{ client_count }} format={{ container_name_prefix }}%03i
+    ignore_errors: true
+
+  - name: Remove test containers
+    command: 'podman rm {{ item }}'
+    with_sequence: count={{ client_count }} format={{ container_name_prefix }}%03i
