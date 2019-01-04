@@ -2,6 +2,17 @@
   dnf:
     name: freeipa-client
     state: installed
+  delegate_to: '{{ container_name }}' #36518
 
 - name: Clean dnf metadata
   command: dnf clean all
+  args:
+    warn: false
+  delegate_to: '{{ container_name }}' #36518
+
+- name: Install run script
+  template:
+    src: templates/run.py
+    dest: /usr/bin/run.py
+    mode: 755
+  delegate_to: '{{ container_name }}' #36518
