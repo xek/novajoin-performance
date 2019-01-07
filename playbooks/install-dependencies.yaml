@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+
+- name: Install libselinux-python
+    dnf:
+      name: python2-libselinux
+      state: installed
+    become: true
+  
+  - name: Install buildah
+    dnf:
+      name: buildah
+      state: installed
+    become: true
+
+  - name: Install podman
+    dnf:
+      name: podman
+      state: installed
+    become: true
