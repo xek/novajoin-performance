@@ -8,9 +8,15 @@
     image_name: ipa-test-client
   tasks:
 
-  - name: Run a specified number of containers
+  - name: Create a specified number of containers
+    command: >
+      podman create --net=host --hostname {{ item }} --name {{ item }}
+      {{ image_name }}
+    with_sequence: count={{ client_count }} format={{ container_name_prefix }}%03i
+
+  - name: Run the test sleeping between starts
     shell: |
-      podman run --net=host --name {{ item }} {{ image_name }}
+      podman start {{ item }}
       sleep {{ pause_seconds }}
     with_sequence: count={{ client_count }} format={{ container_name_prefix }}%03i
 
