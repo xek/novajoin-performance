@@ -1,3 +1,15 @@
+- name: Symlink hostnamectl to /bin/true
+  command: ln -fs /bin/true /usr/bin/hostnamectl
+  args:
+    warn: false
+  delegate_to: '{{ container_name }}' #36518
+
+- name: Symlink systemctl to /bin/true
+  command: ln -fs /bin/true /bin/systemctl
+  args:
+    warn: false
+  delegate_to: '{{ container_name }}' #36518
+
 - name: Install FreeIPA client
   dnf:
     name: freeipa-client

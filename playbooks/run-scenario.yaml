@@ -2,9 +2,9 @@
 - hosts: localhost
   connection: local
   vars:
-    client_count: 10
+    client_count: 100
     pause_seconds: 0
-    container_name_prefix: ipa_client_
+    container_name_prefix: ipa-client-
     image_name: ipa-test-client
   tasks:
 
