@@ -3,7 +3,7 @@
   connection: local
   tasks:
 
-- name: Install libselinux-python
+  - name: Install libselinux-python
     dnf:
       name: python2-libselinux
       state: installed
