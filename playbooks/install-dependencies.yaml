@@ -4,19 +4,19 @@
   tasks:
 
   - name: Install libselinux-python
-    dnf:
+    package:
       name: python2-libselinux
       state: installed
     become: true
-  
+
   - name: Install buildah
-    dnf:
+    package:
       name: buildah
       state: installed
     become: true
 
   - name: Install podman
-    dnf:
+    package:
       name: podman
       state: installed
     become: true
