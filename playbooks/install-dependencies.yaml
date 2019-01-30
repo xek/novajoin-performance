@@ -3,11 +3,22 @@
   connection: local
   tasks:
 
-  - name: Install libselinux-python
+  - name: Install python2-libselinux (Fedora or CentOS/RHEL > 7)
     package:
       name: python2-libselinux
       state: installed
     become: true
+    when: ansible_distribution == "Fedora" or
+          (ansible_distribution == "CentOS" and ansible_distribution_major_version > '7') or
+          (ansible_distribution == "Red Hat" and ansible_distribution_major_version > '7')
+
+  - name: Install libselinux-python (CentOS/RHEL == 7)
+    package:
+      name: libselinux-python
+      state: installed
+    become: true
+    when: (ansible_distribution == "CentOS" and ansible_distribution_major_version == '7') or
+          (ansible_distribution == "RedHat" and ansible_distribution_major_version == '7')
 
   - name: Install buildah
     package:
