@@ -16,8 +16,8 @@ The ansible scripts are tested to work on Fedora 28.
 
 1. client calls novajoin HTTP api [done]
 1. novajoin adds host to FreeIPA and gets an otp [done]
-1. novajoin creates service entries in FreeIPA for that host [todo]
+1. novajoin creates service entries in FreeIPA for that host [done]
 1. client calls ipa-client-install with OTP, inside a container [done]
 1. client gets keytab [done]
-1. client requests a list of certs for the previously created service entries [todo]
-1. client gets the CRL [todo]
+1. client requests a list of certs for the previously created service entries [buggy]
+1. client gets the CRL [buggy]
